@@ -43,7 +43,7 @@ def logout(request):
     return redirect('/')
 
 def data(request):
-    base=sqlite3.connect('db.sqlite3')
+    base=sqlite3.connect('bday.db')
     curse=base.cursor()
     tuple_data=[]
     if(request.method=='POST'):
@@ -52,8 +52,5 @@ def data(request):
         email=request.POST['email']
         tuple_data.append(tuple(name,dob,email))
     print(tuple_data)
-    curse.execute("INSERT INTO  FROM (?,?,?)",tuple_data)
-
-    
-
+    curse.execute("INSERT INTO details  FROM (?,?,?)",tuple_data)
     return render(request,'birthday.html')
