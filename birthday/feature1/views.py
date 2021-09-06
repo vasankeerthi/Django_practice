@@ -2,7 +2,6 @@ from django.shortcuts import render ,redirect
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from .models import Birthday
-import sqlite3
 # Create your views here.
 def index(request):
     return render(request ,'index.html')
@@ -43,14 +42,9 @@ def logout(request):
     return redirect('/')
 
 def data(request):
-    base=sqlite3.connect('bday.db')
-    curse=base.cursor()
-    tuple_data=[]
     if(request.method=='POST'):
         name =request.POST['personname']
         dob=request.POST['dob']
         email=request.POST['email']
-        tuple_data.append(tuple(name,dob,email))
-    print(tuple_data)
-    curse.execute("INSERT INTO details  FROM (?,?,?)",tuple_data)
+        Birthday.objects.save(name,dob,email)
     return render(request,'birthday.html')
