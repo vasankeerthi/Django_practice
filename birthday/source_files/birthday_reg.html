@@ -1,5 +1,10 @@
 <html>
 <title>birthday registration</title>
+<style>
+h2{
+    color:red;
+}</style>
+<head> <h2> <center>register your beloved data here</center></h2>
 <body>
 <form method='POST' name='data'>
 {% csrf_token %}
@@ -9,11 +14,11 @@ enter name of the person you love the most
 <br><br>
 enter the DOB
 <br><br>
-<input type='data' name='dob'>
+<input type='data' name='dob' placeholder='yyyy/mm/dd'>
 <br><br>
 enter the email of the person
 <br><br>
-<input type='email' name='email'>
+<input type='email' name='email'placeholder='example: exmp@email.com'>
 <br><br>
 <input type='submit' >
 </form>

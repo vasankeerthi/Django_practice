@@ -42,9 +42,10 @@ def logout(request):
     return redirect('/')
 
 def data(request):
+    day=Birthday.objects.all()
     if(request.method=='POST'):
         name =request.POST['personname']
         dob=request.POST['dob']
         email=request.POST['email']
-        Birthday.objects.save(name,dob,email)
-    return render(request,'birthday.html')
+        Birthday.objects.create(name=name,dob=dob,email=email)
+    return render(request,'birthday_reg.html',{'day': day})
