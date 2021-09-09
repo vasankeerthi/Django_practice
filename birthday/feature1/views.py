@@ -1,5 +1,6 @@
 from django.shortcuts import render ,redirect
 from django.contrib.auth.models import User,auth
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Birthday
 # Create your views here.
@@ -41,11 +42,21 @@ def logout(request):
     auth.logout(request)
     return redirect('/')
 
+@login_required(login_url='login')
 def data(request):
     day=Birthday.objects.all()
     if(request.method=='POST'):
         name =request.POST['personname']
         dob=request.POST['dob']
         email=request.POST['email']
-        Birthday.objects.create(name=name,dob=dob,email=email)
-    return render(request,'birthday_reg.html',{'day': day})
+        username=request.user.username
+        print(username)
+        if(Birthday.objects.filter(name=name).exists()):
+            if (Birthday.objects.filter(email=email).exists()):
+                print(user.username)
+                messages.info(request,'your beloved name and data already saved')
+                return redirect('/birthday')
+        else:
+            Birthday.objects.create(name=name,dob=dob,email=email,createdby=username)
+            return redirect('/')
+    return render(request,'birthday_reg.html',{'day': day,'messages':messages})

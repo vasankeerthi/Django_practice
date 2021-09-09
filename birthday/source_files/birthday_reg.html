@@ -6,6 +6,9 @@ h2{
 }</style>
 <head> <h2> <center>register your beloved data here</center></h2>
 <body>
+{% for data  in message %}
+<h2>{{data}}</h2>
+{% endfor %}
 <form method='POST' name='data'>
 {% csrf_token %}
 enter name of the person you love the most
