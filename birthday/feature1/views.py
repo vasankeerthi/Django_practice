@@ -22,7 +22,7 @@ def register(request):
                 return redirect('register')
             else:
                 user=User.objects.create_user(username=name,email=email,password=password)
-                user.save();
+                user.save()
                 return redirect('login')
     return render(request,'register.html')
 
@@ -50,13 +50,20 @@ def data(request):
         dob=request.POST['dob']
         email=request.POST['email']
         username=request.user.username
-        print(username)
         if(Birthday.objects.filter(name=name).exists()):
             if (Birthday.objects.filter(email=email).exists()):
-                print(user.username)
                 messages.info(request,'your beloved name and data already saved')
                 return redirect('/birthday')
         else:
-            Birthday.objects.create(name=name,dob=dob,email=email,createdby=username)
-            return redirect('/')
+            Birthday.objects.create(name=name,dob=dob,email=email,created_by=username)
+            return redirect('/display')
     return render(request,'birthday_reg.html',{'day': day,'messages':messages})
+
+@login_required
+def display(request):
+    name=request.user.username
+    dataum=Birthday.objects.filter(created_by=name).all()
+    context={
+        'data' : dataum
+    }
+    return render(request,'dataum.html',context)
