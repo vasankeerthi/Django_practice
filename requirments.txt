@@ -1,0 +1,4 @@
+
+python installed
+
+ '''''' ------- ''''''  pip install django '''''' ------ '''''''
